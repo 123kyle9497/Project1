@@ -17,4 +17,11 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Build
-      run: dotnet build database.sqlproj
+      run: dotnet build database/database.sqlproj
+
+    - name: Deploy
+      uses: azure/sql-action@v2
+      with:
+        connection-string: ${{ secrets.SQL_CONNECTION_STRING }}
+        action: 'publish'
+        path: 'bin/Debug/database.dacpac'
